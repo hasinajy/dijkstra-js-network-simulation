@@ -31,6 +31,14 @@ a {
     text-decoration: none;
 }
 
+.user-input,
+.network-area {
+    height: 100%;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: white;
+}
+
 .user-input {
     flex-basis: 20%;
 }
