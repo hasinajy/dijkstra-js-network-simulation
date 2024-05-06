@@ -12,6 +12,11 @@
 }
 
 body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+
     width: 100vw;
     height: 100vh;
     background-color: #f2f2f2;
@@ -23,4 +28,12 @@ body {
 a {
     color: #353535;
     text-decoration: none;
+}
+
+.user-input {
+    flex-basis: 20%;
+}
+
+.network-area {
+    flex-basis: 80%;
 }
