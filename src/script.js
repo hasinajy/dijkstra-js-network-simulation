@@ -3,10 +3,14 @@ var cy = cytoscape({
     elements: []
 });
 
+var selectedNode = null;
+
 cy.on('click', function (event) {
-    if (event.target === cy) {
+    if (event.target === cy && selectedNode === null) {
         var clickPos = event.position;
         addNode(clickPos.x, clickPos.y);
+    } else {
+        selectedNode = null;
     }
 });
 
@@ -25,8 +29,8 @@ function generateUniqueID() {
 }
 
 cy.on('click', 'node', function (event) {
-    var clickedNode = event.target;
-    handleClick(clickedNode);
+    selectedNode = event.target;
+    handleClick(selectedNode);
 });
 
 function handleClick(clickedNode) {
