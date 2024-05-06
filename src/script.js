@@ -23,3 +23,15 @@ function generateUniqueID() {
     nodeCounter++;
     return 'node' + nodeCounter;
 }
+
+cy.on('click', 'node', function (event) {
+    var clickedNode = event.target;
+    handleClick(clickedNode);
+});
+
+function handleClick(clickedNode) {
+    var nodeId = clickedNode.id();
+    var nodeLabel = clickedNode.data('label');
+
+    console.log("Node clicked:", nodeId, nodeLabel);
+}
