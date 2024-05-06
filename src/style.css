@@ -92,6 +92,10 @@ a {
     flex-basis: 30%;
 }
 
+.server-list {
+    padding: .5rem 1rem;
+}
+
 /* Network area */
 .network-area {
     flex-basis: 80%;

@@ -2,6 +2,8 @@
 
 test/
 
+fontawesome/
+
 .vscode/
 
 node_modules/
