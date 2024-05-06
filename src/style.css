@@ -39,8 +39,57 @@ a {
     background-color: white;
 }
 
+/* User input */
 .user-input {
     flex-basis: 20%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.user-input>*>*+* {
+    display: block;
+    margin-top: 1.5rem;
+}
+
+.section-title {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+}
+
+/* Server info */
+.server-info {
+    flex-basis: 70%;
+}
+
+.server-ip > * {
+    display: block;
+}
+
+.server-ip input {
+    width: 100%;
+    margin-top: .5rem;
+    padding: .5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid #353535;
+}
+
+.server-ip input:focus {
+    outline: none;
+}
+
+/* Hosted websites */
+.hosted-websites ul {
+    margin-top: .5rem;
+}
+
+.hosted-websites li {
+    list-style-position: inside;
+}
+
+/* Server link */
+.server-link {
+    flex-basis: 30%;
 }
 
 /* Network area */
