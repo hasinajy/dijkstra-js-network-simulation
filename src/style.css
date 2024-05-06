@@ -43,6 +43,50 @@ a {
     flex-basis: 20%;
 }
 
+/* Network area */
 .network-area {
     flex-basis: 80%;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 500px;
+    border-radius: 5rem;
+
+    font-size: 1.5rem;
+}
+
+.searchbar>* {
+    display: flex;
+    align-items: center;
+
+    height: 56px;
+    padding: 1rem 1rem;
+}
+
+.searchbar span {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+
+    background-color: #c8c8c8;
+}
+
+.searchbar input {
+    display: inline-block;
+    flex-grow: 1;
+
+    margin-right: 1rem;
+    border: none;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    background-color: #f2f2f2;
+
+    font-size: 1.25rem;
+}
+
+.searchbar input:focus {
+    outline: none;
 }
