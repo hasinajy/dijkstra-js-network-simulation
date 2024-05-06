@@ -126,12 +126,19 @@ a {
 .network-area {
     flex-basis: 78%;
 
+    position: relative;
+
     padding: 2rem;
     border-radius: 1rem;
     background-color: white;
 }
 
 .searchbar {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
