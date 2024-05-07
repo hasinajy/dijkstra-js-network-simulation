@@ -42,14 +42,14 @@ cy.on('click', 'node', function (event) {
 cy.on('click', 'edge', function (event) {
     selectedNode = null;
 
-    if (selectedEdge == event.target) {
-        console.log("\nSame edge clicked. Deleting edge.");
+    if (isSelectedEdge(event.target)) {
         cy.remove(cy.edges(`[id = '${event.target.id()}']`));
-        selectedEdge = null;
-    } else {
-        console.log("\nSelected edge: " + event.target.id());
-        selectedEdge = event.target;
-    }    
+        
+        console.log(">>> Same edge. Edge deleted.");
+        console.log("\n");
+    }
+
+    selectedEdge = (isSelectedEdge(event.target)) ? null : event.target;
 });
 
 // Boolean functions
@@ -69,6 +69,10 @@ function isLinked(sourceNode, targetNode) {
     var edges = cy.edges("[source='" + sourceNode.id() + "'][target='" + targetNode.id() + "']")
         .union(cy.edges("[source='" + targetNode.id() + "'][target='" + sourceNode.id() + "']"));
     return edges.length > 0;
+}
+
+function isSelectedEdge(edge) {
+    return selectedEdge == edge;
 }
 
 // Node
