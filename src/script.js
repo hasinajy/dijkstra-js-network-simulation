@@ -6,6 +6,7 @@ var cy = cytoscape({
 var nodeCounter = 0, edgeCounter = 0;
 var selectedNode = null, selectedEdge = null;
 
+// Create a new node
 cy.on('click', function (event) {
     if (canvasClicked(event) && !nodeSelected()) {
         addNode(event.position);
@@ -14,6 +15,7 @@ cy.on('click', function (event) {
     }
 });
 
+// Create a link bewteen nodes
 cy.on('click', 'node', function (event) {
     if (nodeSelected() && targetNodeSelected(event.target)) {
         var targetNode = event.target;
@@ -37,6 +39,7 @@ cy.on('click', 'node', function (event) {
     console.log("\n");
 });
 
+// Select & delete edges
 cy.on('click', 'edge', function (event) {
     selectedNode = null;
 
