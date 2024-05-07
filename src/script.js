@@ -3,31 +3,18 @@ var cy = cytoscape({
     elements: []
 });
 
+var nodeCounter = 0;
+var edgeCounter = 0;
 var selectedNode = null;
 var selectedEdge = null;
 
 cy.on('click', function (event) {
-    if (event.target === cy && selectedNode === null) {
-        var clickPos = event.position;
-        addNode(clickPos.x, clickPos.y);
-    } else if (event.target === cy) {
+    if (canvasClicked(event) && !nodeSelected()) {
+        addNode(event.position);
+    } else if (canvasClicked(event)) {
         selectedNode = null;
     }
 });
-
-function addNode(x, y) {
-    var newNode = {
-        data: { id: generateUniqueID(), label: 'New Node' },
-        position: { x: x, y: y },
-    };
-    cy.add(newNode);
-}
-
-var nodeCounter = 0;
-function generateUniqueID() {
-    nodeCounter++;
-    return 'node' + nodeCounter;
-}
 
 cy.on('click', 'node', function (event) {
     if (selectedNode != null && selectedNode != event.target) {
@@ -89,4 +76,27 @@ function handleClick(clickedNode) {
     var nodeLabel = clickedNode.data('label');
 
     console.log("\nNode clicked:", nodeId, nodeLabel);
+}
+
+// Boolean functions
+function canvasClicked(event) {
+    return event.target === cy;
+}
+
+function nodeSelected() {
+    return !(selectedNode === null);
+}
+
+// Node
+function addNode(clickPos) {
+    var newNode = {
+        data: { id: generateNodeID(), label: 'Default Node' },
+        position: { x: clickPos.x, y: clickPos.y },
+    };
+    cy.add(newNode);
+}
+
+function generateNodeID() {
+    nodeCounter++;
+    return 'node-' + nodeCounter;
 }
