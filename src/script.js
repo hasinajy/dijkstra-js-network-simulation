@@ -39,15 +39,19 @@ cy.on('click', 'node', function (event) {
         console.log("\n");
 
         // Create edge
-        cy.add({
-            data: {
-                id: 'edge' + Math.random().toString(),
-                source: selectedNode.id(),
-                target: targetNode.id()
-            }
-        });
+        if (!(isLinked(selectedNode.id(), targetNode.id()) || isLinked(targetNode.id(), selectedNode.id()))) {
+            cy.add({
+                data: {
+                    id: 'edge' + Math.random().toString(),
+                    source: selectedNode.id(),
+                    target: targetNode.id()
+                }
+            });
 
-        console.log("Edge data:", cy.edges().last().data());
+            console.log("Edge data:", cy.edges().last().data());
+        } else {
+            console.log("\nExisting edge data. Link not added.\n");
+        }
 
         selectedNode = targetNode;
         handleClick(selectedNode);
@@ -60,9 +64,14 @@ cy.on('click', 'node', function (event) {
     }
 });
 
+function isLinked(sourceNodeId, targetNodeId) {
+    var existingEdges = cy.edges("[source='" + sourceNodeId + "'][target='" + targetNodeId + "']");
+    return existingEdges.length > 0;
+}
+
 function handleClick(clickedNode) {
     var nodeId = clickedNode.id();
     var nodeLabel = clickedNode.data('label');
 
-    console.log("Node clicked:", nodeId, nodeLabel);
+    console.log("\nNode clicked:", nodeId, nodeLabel);
 }
