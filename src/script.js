@@ -56,8 +56,8 @@ cy.on('click', 'node', function (event) {
         selectedNode = targetNode;
         handleClick(selectedNode);
     } else if (selectedNode == event.target) {
-        console.log("\nSame node clicked. Deselecting it.\n");
-        selectedNode = null;
+        console.log("\nSame node clicked. No edge created.\n");
+        selectedNode = event.target;
     } else {
         selectedNode = event.target;
         handleClick(selectedNode);
