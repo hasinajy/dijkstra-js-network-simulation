@@ -32,8 +32,12 @@ cy.on('click', 'node', function (event) {
     if (selectedNode != null) {
         var targetNode = event.target;
         
+        console.log("\n");
         console.log("Target node selected.");
-        
+        console.log("Selected node id: "+ selectedNode.id());
+        console.log("Target node id: "+ targetNode.id());
+        console.log("\n");
+
         // Create edge
         cy.add({
             id: 'edge' + Math.random().toString(),
