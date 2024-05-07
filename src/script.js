@@ -46,6 +46,8 @@ cy.on('click', 'node', function (event) {
             'line-color': '#ccc',  // Example style property
         });
         
+        console.log("Edge data:", cy.edges().last().data());
+
         selectedNode = targetNode;
         handleClick(selectedNode);
     } else {
