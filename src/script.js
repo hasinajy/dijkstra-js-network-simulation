@@ -17,40 +17,26 @@ cy.on('click', function (event) {
 });
 
 cy.on('click', 'node', function (event) {
-    if (selectedNode != null && selectedNode != event.target) {
+    if (nodeSelected() && targetNodeSelected(event.target)) {
         var targetNode = event.target;
-
-        console.log("\n");
+        
+        console.log("==== NEW EDGE ====");
         console.log("Target node selected.");
-        console.log("Selected node id: " + selectedNode.id());
-        console.log("Target node id: " + targetNode.id());
-        console.log("\n");
+        console.log("Source id: " + selectedNode.id());
+        console.log("Target id: " + targetNode.id());
 
-        // Create edge
-        if (!(isLinked(selectedNode.id(), targetNode.id()) || isLinked(targetNode.id(), selectedNode.id()))) {
-            cy.add({
-                data: {
-                    id: 'edge' + edgeCounter,
-                    source: selectedNode.id(),
-                    target: targetNode.id()
-                }
-            });
-
-            edgeCounter++;
-            console.log("Edge data:", cy.edges().last().data());
+        // Create edge geometry
+        if (!isLinked(selectedNode, targetNode)) {
+            addEdge(selectedNode, targetNode);
         } else {
-            console.log("\nExisting edge data. Link not added.\n");
+            console.log(">>> Existing edge data. Link not added.");
         }
-
-        selectedNode = targetNode;
-        handleClick(selectedNode);
     } else if (selectedNode == event.target) {
-        console.log("\nSame node clicked. No edge created.\n");
-        selectedNode = event.target;
-    } else {
-        selectedNode = event.target;
-        handleClick(selectedNode);
+        console.log(">>> Same node. Edge not created.");
     }
+
+    selectedNode = event.target;
+    console.log("\n");
 });
 
 cy.on('click', 'edge', function (event) {
@@ -66,18 +52,6 @@ cy.on('click', 'edge', function (event) {
     }    
 });
 
-function isLinked(sourceNodeId, targetNodeId) {
-    var existingEdges = cy.edges("[source='" + sourceNodeId + "'][target='" + targetNodeId + "']");
-    return existingEdges.length > 0;
-}
-
-function handleClick(clickedNode) {
-    var nodeId = clickedNode.id();
-    var nodeLabel = clickedNode.data('label');
-
-    console.log("\nNode clicked:", nodeId, nodeLabel);
-}
-
 // Boolean functions
 function canvasClicked(event) {
     return event.target === cy;
@@ -85,6 +59,16 @@ function canvasClicked(event) {
 
 function nodeSelected() {
     return !(selectedNode === null);
+}
+
+function targetNodeSelected(node) {
+    return selectedNode != node;
+}
+
+function isLinked(sourceNode, targetNode) {
+    var edges = cy.edges("[source='" + sourceNode.id() + "'][target='" + targetNode.id() + "']")
+        .union(cy.edges("[source='" + targetNode.id() + "'][target='" + sourceNode.id() + "']"));
+    return edges.length > 0;
 }
 
 // Node
@@ -99,4 +83,20 @@ function addNode(clickPos) {
 function generateNodeID() {
     nodeCounter++;
     return 'node-' + nodeCounter;
+}
+
+// Edge
+function addEdge(srcNode, targetNode) {
+    cy.add({
+        data: {
+            id: generateEdgeID(),
+            source: srcNode.id(),
+            target: targetNode.id()
+        }
+    });
+}
+
+function generateEdgeID() {
+    edgeCounter++;
+    return 'edge-' + edgeCounter;
 }
