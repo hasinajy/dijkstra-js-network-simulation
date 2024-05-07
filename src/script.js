@@ -3,10 +3,8 @@ var cy = cytoscape({
     elements: []
 });
 
-var nodeCounter = 0;
-var edgeCounter = 0;
-var selectedNode = null;
-var selectedEdge = null;
+var nodeCounter = 0, edgeCounter = 0;
+var selectedNode = null, selectedEdge = null;
 
 cy.on('click', function (event) {
     if (canvasClicked(event) && !nodeSelected()) {
