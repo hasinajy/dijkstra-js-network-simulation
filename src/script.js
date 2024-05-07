@@ -9,7 +9,7 @@ cy.on('click', function (event) {
     if (event.target === cy && selectedNode === null) {
         var clickPos = event.position;
         addNode(clickPos.x, clickPos.y);
-    } else {
+    } else if (event.target === cy) {
         selectedNode = null;
     }
 });
@@ -29,8 +29,25 @@ function generateUniqueID() {
 }
 
 cy.on('click', 'node', function (event) {
-    selectedNode = event.target;
-    handleClick(selectedNode);
+    if (selectedNode != null) {
+        var targetNode = event.target;
+        
+        console.log("Target node selected.");
+        
+        // Create edge
+        cy.add({
+            id: 'edge' + Math.random().toString(),
+            source: selectedNode.id(),
+            target: targetNode.id(),
+            'line-color': '#ccc',  // Example style property
+        });
+        
+        selectedNode = targetNode;
+        handleClick(selectedNode);
+    } else {
+        selectedNode = event.target;
+        handleClick(selectedNode);
+    }
 });
 
 function handleClick(clickedNode) {
