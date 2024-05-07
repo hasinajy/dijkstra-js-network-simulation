@@ -43,12 +43,13 @@ cy.on('click', 'node', function (event) {
         if (!(isLinked(selectedNode.id(), targetNode.id()) || isLinked(targetNode.id(), selectedNode.id()))) {
             cy.add({
                 data: {
-                    id: 'edge' + Math.random().toString(),
+                    id: 'edge' + edgeCounter,
                     source: selectedNode.id(),
                     target: targetNode.id()
                 }
             });
 
+            edgeCounter++;
             console.log("Edge data:", cy.edges().last().data());
         } else {
             console.log("\nExisting edge data. Link not added.\n");
