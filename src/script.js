@@ -4,6 +4,7 @@ var cy = cytoscape({
 });
 
 var selectedNode = null;
+var selectedEdge = null;
 
 cy.on('click', function (event) {
     if (event.target === cy && selectedNode === null) {
@@ -62,6 +63,19 @@ cy.on('click', 'node', function (event) {
         selectedNode = event.target;
         handleClick(selectedNode);
     }
+});
+
+cy.on('click', 'edge', function (event) {
+    selectedNode = null;
+
+    if (selectedEdge == event.target) {
+        console.log("\nSame edge clicked. Deleting edge.");
+        cy.remove(cy.edges(`[id = '${event.target.id()}']`));
+        selectedEdge = null;
+    } else {
+        console.log("\nSelected edge: " + event.target.id());
+        selectedEdge = event.target;
+    }    
 });
 
 function isLinked(sourceNodeId, targetNodeId) {
