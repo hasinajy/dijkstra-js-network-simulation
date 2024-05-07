@@ -29,7 +29,7 @@ function generateUniqueID() {
 }
 
 cy.on('click', 'node', function (event) {
-    if (selectedNode != null) {
+    if (selectedNode != null && selectedNode != event.target) {
         var targetNode = event.target;
 
         console.log("\n");
@@ -51,6 +51,9 @@ cy.on('click', 'node', function (event) {
 
         selectedNode = targetNode;
         handleClick(selectedNode);
+    } else if (selectedNode == event.target) {
+        console.log("\nSame node clicked. Deselecting it.\n");
+        selectedNode = null;
     } else {
         selectedNode = event.target;
         handleClick(selectedNode);
