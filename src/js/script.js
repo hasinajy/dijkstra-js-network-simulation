@@ -6,7 +6,7 @@ var cy = cytoscape({
             style: {
                 width: 2,
                 targetArrowShape: 'triangle',
-                
+
                 label: 'data(id)',
             }
         },
@@ -54,10 +54,11 @@ var selectedNode = null, selectedEdge = null;
 
 // Create a new node
 cy.on('click', function (event) {
-    if (canvasClicked(event) && !nodeSelected()) {
+    if (canvasClicked(event) && !nodeSelected() && !edgeSelected()) {
         addNode(event.position);
     } else if (canvasClicked(event)) {
         selectedNode = null;
+        selectedEdge = null;
     }
 });
 
@@ -106,6 +107,10 @@ function canvasClicked(event) {
 
 function nodeSelected() {
     return !(selectedNode === null);
+}
+
+function edgeSelected() {
+    return !(selectedEdge === null);
 }
 
 function targetNodeSelected(node) {
