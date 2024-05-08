@@ -154,6 +154,11 @@ function displayNodeContent() {
 
 function deleteSelectedNode() {
     cy.remove(`node[id = '${selectedNode.id()}']`);
+
+    nodes = nodes.filter((server) => {
+        return server.data.id != selectedNode.id();
+    });
+
     selectedNode = null;
 }
 
