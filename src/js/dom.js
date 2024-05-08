@@ -85,6 +85,8 @@ function createNoInformation(containerId) {
         return;
     }
 
+    container.innerHTML = "";
+
     const textContainer = document.createElement("div");
     textContainer.textContent = "No sever selected";
 
