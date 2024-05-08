@@ -73,11 +73,11 @@ a {
     background-color: white;
 }
 
-.server-info > * {
+.server-info>* {
     width: 100%;
 }
 
-.server-ip > * {
+.server-ip>* {
     display: block;
 }
 
@@ -136,10 +136,29 @@ a {
     text-transform: capitalize;
 }
 
-.server-btn {
-    display: block;
+#info-btn-group {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+
     margin-top: auto;
     margin-bottom: 0;
+}
+
+#info-btn-group>* {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.server-btn {
+    flex-grow: 1;
+}
+
+#remove-server {
+    background-color: transparent;
+    border: 1px solid lightgray;
+    border-radius: 2rem;
 }
 
 /* Network area */
