@@ -151,6 +151,11 @@ function displayNodeContent() {
     document.getElementById("server-ip").value = selectedNode._private.data.label;
 }
 
+function deleteSelectedNode() {
+    cy.remove(`node[id = '${selectedNode.id()}']`);
+    selectedNode = null;
+}
+
 // Edge
 function addEdge(srcNode, targetNode) {
     cy.add({

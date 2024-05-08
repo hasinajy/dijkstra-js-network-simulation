@@ -20,3 +20,13 @@ function appendWebsite(website) {
 
     websiteList.insertBefore(li, websiteCta);
 }
+
+try {
+    const deleteBtn = document.getElementById("remove-server");
+
+    deleteBtn.addEventListener("click", () => {
+        deleteSelectedNode();
+    });
+} catch (error) {
+
+}
