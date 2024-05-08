@@ -1,15 +1,3 @@
-const addWebsite = document.getElementById("add-website");
-const websiteList = document.getElementById("website-list");
-const websiteCta = document.getElementById("website-cta")
-
-addWebsite.addEventListener("click", (event) => {
-    var websiteValue = document.getElementById("website-field").value;
-
-    if (validWebsite(websiteValue)) {
-        appendWebsite(websiteValue);
-    }
-});
-
 function validWebsite(websiteValue) {
     return (websiteValue !== "" && websiteValue !== undefined && websiteValue !== null);
 }
@@ -22,6 +10,18 @@ function appendWebsite(website) {
 }
 
 try {
+    const addWebsite = document.getElementById("add-website");
+    const websiteList = document.getElementById("website-list");
+    const websiteCta = document.getElementById("website-cta")
+
+    addWebsite.addEventListener("click", (event) => {
+        var websiteValue = document.getElementById("website-field").value;
+
+        if (validWebsite(websiteValue)) {
+            appendWebsite(websiteValue);
+        }
+    });
+
     const deleteBtn = document.getElementById("remove-server");
 
     deleteBtn.addEventListener("click", () => {
