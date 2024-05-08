@@ -200,3 +200,34 @@ a {
 .searchbar input:focus {
     outline: none;
 }
+
+/* Add website */
+#website-list li {
+    margin-bottom: .5rem;
+}
+
+#website-cta {
+    margin-top: 1.5rem;
+}
+
+#add-website {
+    display: inline-block;
+    padding: .5rem .6rem;
+    border-radius: 100%;
+    background-color: lightgray;
+
+    font-size: .875rem;
+}
+
+#website-field {
+    display: inline-block;
+    margin-left: .5rem;
+    padding: .5rem 1rem;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+#website-field:focus {
+    outline: none;
+}
