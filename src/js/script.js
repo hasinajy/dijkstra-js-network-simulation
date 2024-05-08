@@ -7,7 +7,7 @@ var cy = cytoscape({
                 width: 2,
                 targetArrowShape: 'triangle',
 
-                label: 'data(id)',
+                label: 'data(weight)'
             }
         },
         {
@@ -42,7 +42,7 @@ var cy = cytoscape({
         {
             selector: 'node:unselected',
             style: {
-                backgroundColor: 'rgb(160, 160, 180)',
+                backgroundColor: 'rgb(160, 160, 180)'
             }
         }
     ],
@@ -147,7 +147,8 @@ function addEdge(srcNode, targetNode) {
         data: {
             id: generateEdgeID(),
             source: srcNode.id(),
-            target: targetNode.id()
+            target: targetNode.id(),
+            weight: 10
         }
     });
 }
