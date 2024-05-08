@@ -85,6 +85,8 @@ cy.on('click', 'node', function (event) {
 
     selectedNode = event.target;
     console.log("\n");
+
+    displayNodeContent();
 });
 
 // Select & delete edges
@@ -135,7 +137,7 @@ function addNode(clickPos) {
         position: { x: clickPos.x, y: clickPos.y },
         hostedWebsites: []
     };
-    
+
     cy.add(newNode);
     nodes.push(newNode);
 }
@@ -143,6 +145,10 @@ function addNode(clickPos) {
 function generateNodeID() {
     nodeCounter++;
     return 'node-' + nodeCounter;
+}
+
+function displayNodeContent() {
+    document.getElementById("server-ip").value = selectedNode._private.data.label;
 }
 
 // Edge
