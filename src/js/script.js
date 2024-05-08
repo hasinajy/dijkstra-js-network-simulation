@@ -1,5 +1,51 @@
 var cy = cytoscape({
     container: document.getElementById('cy'),
+    style: [
+        {
+            selector: 'edge',
+            style: {
+                width: 2,
+                targetArrowShape: 'triangle',
+                
+                label: 'data(id)',
+            }
+        },
+        {
+            selector: 'edge:selected',
+            style: {
+                lineColor: '#6c6ce7'
+            }
+        },
+        {
+            selector: 'edge:unselected',
+            style: {
+                lineColor: '#ccc'
+            }
+        },
+        {
+            selector: 'node',
+            style: {
+                shape: 'circle',
+                padding: 10,
+
+                label: 'data(label)',
+                color: 'black',
+                fontSize: 16
+            }
+        },
+        {
+            selector: 'node:selected',
+            style: {
+                backgroundColor: '#6c6ce7'
+            }
+        },
+        {
+            selector: 'node:unselected',
+            style: {
+                backgroundColor: 'rgb(160, 160, 180)',
+            }
+        }
+    ],
     elements: []
 });
 
@@ -19,7 +65,7 @@ cy.on('click', function (event) {
 cy.on('click', 'node', function (event) {
     if (nodeSelected() && targetNodeSelected(event.target)) {
         var targetNode = event.target;
-        
+
         console.log("==== NEW EDGE ====");
         console.log("Target node selected.");
         console.log("Source id: " + selectedNode.id());
@@ -45,7 +91,7 @@ cy.on('click', 'edge', function (event) {
 
     if (isSelectedEdge(event.target)) {
         cy.remove(cy.edges(`[id = '${event.target.id()}']`));
-        
+
         console.log(">>> Same edge. Edge deleted.");
         console.log("\n");
     }
