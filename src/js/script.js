@@ -60,6 +60,7 @@ cy.on('click', function (event) {
     } else if (canvasClicked(event)) {
         selectedNode = null;
         selectedEdge = null;
+        createNoInformation("server-info");
     }
 });
 
