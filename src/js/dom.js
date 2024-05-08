@@ -75,4 +75,18 @@ function createServerInformation(containerId) {
     container.appendChild(infoButtonGroup);
 }
 
-createServerInformation("server-info");
+function createNoInformation(containerId) {
+    // Get the container element
+    var container = document.getElementById(containerId);
+    if (!container) {
+        console.error("Container element with ID", containerId, "not found.");
+        return;
+    }
+
+    const textContainer = document.createElement("div");
+    textContainer.textContent = "No sever selected";
+
+    container.appendChild(textContainer);
+}
+
+createNoInformation("server-info");
