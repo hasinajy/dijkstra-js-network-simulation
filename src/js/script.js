@@ -155,6 +155,14 @@ function addEdge(srcNode, targetNode) {
             weight: 10
         }
     });
+
+    links.push(
+        {
+            srcNode: srcNode,
+            targetNode: targetNode,
+            ping: 10
+        }
+    );
 }
 
 function generateEdgeID() {
