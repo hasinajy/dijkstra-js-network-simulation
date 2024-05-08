@@ -133,7 +133,7 @@ function isSelectedEdge(edge) {
 // Node
 function addNode(clickPos) {
     var newNode = {
-        data: { id: generateNodeID(), label: 'Default Node' },
+        data: { id: generateNodeID(), label: '0.0.0.0' },
         position: { x: clickPos.x, y: clickPos.y },
         hostedWebsites: []
     };
