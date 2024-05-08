@@ -160,6 +160,7 @@ function deleteSelectedNode() {
     });
 
     selectedNode = null;
+    createNoInformation("server-info");
 }
 
 // Edge
