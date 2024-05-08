@@ -77,8 +77,6 @@ function createServerInformation(containerId) {
     container.appendChild(infoButtonGroup);
 
     var addWebsite = document.getElementById("add-website");
-    var websiteList = document.getElementById("website-list");
-    var websiteCta = document.getElementById("website-cta");
 
     addWebsite.addEventListener("click", (event) => {
         var websiteValue = document.getElementById("website-field").value;
@@ -116,6 +114,9 @@ function validWebsite(websiteValue) {
 }
 
 function appendWebsite(website) {
+    var websiteList = document.getElementById("website-list");
+    var websiteCta = document.getElementById("website-cta");
+
     var li = document.createElement("li");
     li.textContent = website;
 
