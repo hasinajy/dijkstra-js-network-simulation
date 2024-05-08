@@ -132,6 +132,7 @@ function addNode(clickPos) {
     var newNode = {
         data: { id: generateNodeID(), label: 'Default Node' },
         position: { x: clickPos.x, y: clickPos.y },
+        hostedWebsites: []
     };
     cy.add(newNode);
 }
