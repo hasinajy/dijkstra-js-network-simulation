@@ -12,31 +12,7 @@
 
 <body>
     <div class="user-input">
-        <section class="server-info">
-            <h1 class="section-title">Server information</h1>
-
-            <div class="form__control server-ip">
-                <label for="server-ip"><b>Server IP:</b></label>
-                <input type="text" name="server-ip" value="192.168.17.16" id="server-ip">
-            </div>
-
-            <div class="hosted-websites">
-                <p><b>Hosted websites</b></p>
-
-                <ul id="website-list">
-                    <li>www.facebook.com</li>
-                    <li>www.facebook.com</li>
-                    <li>www.facebook.com</li>
-                    <li>www.facebook.com</li>
-                    <li id="website-cta"><span id="add-website" class="fa fa-add btn"></span><input type="text"
-                            name="website" id="website-field" placeholder="Add a new website ..."></li>
-                </ul>
-            </div>
-
-            <div id="info-btn-group">
-                <span id="remove-server" class="fa fa-trash server-btn btn"></span>
-                <span id="update-server" class="server-btn btn">Update server data</span>
-            </div>
+        <section id="server-info" class="server-info">
         </section>
 
         <section class="server-link">
@@ -71,6 +47,7 @@
         </div>
     </div>
 
+    <script src="./js/dom.js"></script>
     <script src="./js/script.js"></script>
     <script src="./js/form-handler.js"></script>
 </body>
