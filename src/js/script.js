@@ -135,7 +135,9 @@ function addNode(clickPos) {
         position: { x: clickPos.x, y: clickPos.y },
         hostedWebsites: []
     };
+    
     cy.add(newNode);
+    nodes.push(newNode);
 }
 
 function generateNodeID() {
