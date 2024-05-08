@@ -49,6 +49,7 @@ var cy = cytoscape({
     elements: []
 });
 
+var nodes = [], links = [];
 var nodeCounter = 0, edgeCounter = 0;
 var selectedNode = null, selectedEdge = null;
 
