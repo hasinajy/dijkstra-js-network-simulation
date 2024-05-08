@@ -25,7 +25,6 @@ var cy = cytoscape({
         {
             selector: 'node',
             style: {
-                shape: 'circle',
                 padding: 10,
 
                 label: 'data(label)',
