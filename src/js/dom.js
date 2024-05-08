@@ -75,6 +75,24 @@ function createServerInformation(containerId) {
     container.appendChild(formControl);
     container.appendChild(hostedWebsites);
     container.appendChild(infoButtonGroup);
+
+    var addWebsite = document.getElementById("add-website");
+    var websiteList = document.getElementById("website-list");
+    var websiteCta = document.getElementById("website-cta");
+
+    addWebsite.addEventListener("click", (event) => {
+        var websiteValue = document.getElementById("website-field").value;
+
+        if (validWebsite(websiteValue)) {
+            appendWebsite(websiteValue);
+        }
+    });
+
+    var deleteBtn = document.getElementById("remove-server");
+
+    deleteBtn.addEventListener("click", () => {
+        deleteSelectedNode();
+    });
 }
 
 function createNoInformation(containerId) {
@@ -91,6 +109,17 @@ function createNoInformation(containerId) {
     textContainer.textContent = "No sever selected";
 
     container.appendChild(textContainer);
+}
+
+function validWebsite(websiteValue) {
+    return (websiteValue !== "" && websiteValue !== undefined && websiteValue !== null);
+}
+
+function appendWebsite(website) {
+    var li = document.createElement("li");
+    li.textContent = website;
+
+    websiteList.insertBefore(li, websiteCta);
 }
 
 createNoInformation("server-info");
