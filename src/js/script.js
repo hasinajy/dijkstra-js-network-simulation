@@ -148,6 +148,7 @@ function generateNodeID() {
 }
 
 function displayNodeContent() {
+    createServerInformation("server-info");
     document.getElementById("server-ip").value = selectedNode._private.data.label;
 }
 

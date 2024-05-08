@@ -6,6 +6,8 @@ function createServerInformation(containerId) {
         return;
     }
 
+    container.innerHTML = "";
+
     // Create the elements
     var h1 = document.createElement('h1');
     h1.classList.add('section-title');
