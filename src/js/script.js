@@ -139,7 +139,11 @@ function addNode(clickPos) {
     };
 
     cy.add(newNode);
-    nodes.push(newNode);
+    nodes.push({
+        ip: newNode.data.label,
+        websites: [],
+        connections: []
+    });
 }
 
 function generateNodeID() {
