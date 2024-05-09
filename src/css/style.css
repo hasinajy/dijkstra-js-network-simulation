@@ -238,3 +238,25 @@ a {
 #website-field:focus {
     outline: none;
 }
+
+/* Run simulation */
+#run-simulation {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: lightgray;
+
+    color: white;
+}
+
+#run-simulation:hover {
+    cursor: pointer;
+}
