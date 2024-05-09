@@ -139,9 +139,11 @@ function createServerInformation(containerId) {
 
 function updateSelectedServer() {
     const IPAdress = document.getElementById("server-ip").value;
+    const serverState = (document.getElementById("server-state").checked) ? "on" : "off";
     const websiteList = getListContents("website-list");
 
     updateServerIP(IPAdress);
+    updateServerState(IPAdress, serverState);
     updateServerWebsites(IPAdress, websiteList);
 }
 
@@ -163,6 +165,14 @@ function updateServerWebsites(IPAdress, websiteList) {
     })[0];
 
     server.websites = websiteList;
+}
+
+function updateServerState(IPAdress, serverState) {
+    const srcServer = dijkstraServers.filter((server) => {
+        return server.ip == IPAdress;
+    })[0];
+
+    srcServer.state = serverState;
 }
 
 function updateServerIP(IPAdress) {
