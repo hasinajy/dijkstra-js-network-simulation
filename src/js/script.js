@@ -48,7 +48,7 @@ var cy = cytoscape({
     elements: []
 });
 
-var dijkstraServers = [], serverLinks = [], links = [];
+var dijkstraServers = [], serverLinks = [], links = [], dijkstra;
 var nodeCounter = 0, edgeCounter = 0;
 var selectedNode = null, selectedEdge = null;
 
@@ -86,6 +86,10 @@ cy.on('click', 'node', function (event) {
 
     selectedNode = event.target;
     console.log("\n");
+
+    dijkstra = dijkstraServers.filter((server) => {
+        return server.ip == selectedNode.data('label');
+    })[0];
 
     displayNodeContent();
 });
