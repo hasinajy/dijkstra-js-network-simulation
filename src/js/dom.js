@@ -248,5 +248,7 @@ function runSimulation() {
 
     if (dijkstra != null && dijkstra != undefined && url != "") {
         console.log("Running simulation ...");
+
+        const path = findShortestPath(dijkstra, url);
     }
 }
