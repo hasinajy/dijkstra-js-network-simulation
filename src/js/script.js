@@ -186,8 +186,8 @@ function displayNodeContent() {
 function deleteSelectedNode() {
     cy.remove(`node[id = '${selectedNode.id()}']`);
 
-    nodes = nodes.filter((server) => {
-        return server.data.id != selectedNode.id();
+    dijkstraServers = dijkstraServers.filter((server) => {
+        return server.ip != selectedNode.data('label');
     });
 
     selectedNode = null;
