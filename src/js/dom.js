@@ -35,10 +35,29 @@ function createServerInformation(containerId) {
     serverStateLabel.appendChild(bold);
     serverState.appendChild(serverStateLabel);
 
+    // Create the label element
+    const switchLabel = document.createElement('label');
+    switchLabel.classList.add('switch');
+
+    // Create the checkbox element
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = "server-state";
+
+    // Create the slider element (span)
+    const switchText = document.createElement('span');
+    switchText.textContent = "On/Off";
+
+    // Append elements to the label
+    switchLabel.appendChild(checkbox);
+    switchLabel.appendChild(switchText);
+
+    serverState.appendChild(switchLabel);
+
     var hostedWebsites = document.createElement('div');
     hostedWebsites.classList.add('hosted-websites');
 
-    var hostedWebsitesTitle = document.createElement('p'); 
+    var hostedWebsitesTitle = document.createElement('p');
     labelText.textContent = "Hosted websites:";
     hostedWebsitesTitle.appendChild(labelText);
 
