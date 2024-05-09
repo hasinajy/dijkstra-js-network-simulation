@@ -198,6 +198,12 @@ function linkServer(srcIP, targetIP, latency) {
     });
 }
 
+function getServer(IP) {
+    return dijkstraServers.filter((server) => {
+        return server.ip == IP;
+    })[0];
+}
+
 function generateEdgeID() {
     edgeCounter++;
     return 'edge-' + edgeCounter;
