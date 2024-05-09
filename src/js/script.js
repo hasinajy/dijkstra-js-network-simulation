@@ -23,7 +23,7 @@ var cy = cytoscape({
             }
         },
         {
-            selector: 'edge:highlight',
+            selector: 'edge.highlight',
             style: {
                 backgroundColor: 'rgb(160, 200, 160)'
             }
@@ -51,7 +51,7 @@ var cy = cytoscape({
             }
         },
         {
-            selector: 'node:highlight',
+            selector: 'node.highlight',
             style: {
                 backgroundColor: 'rgb(160, 200, 160)'
             }
