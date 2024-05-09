@@ -35,7 +35,7 @@ function createServerInformation(containerId) {
     serverStateLabel.appendChild(bold);
     serverState.appendChild(serverStateLabel);
 
-    const selectedServer = getServer(selectedNode.data('label'));
+    const currentServer = getServer(selectedServer.data('label'));
 
     // Create the label element
     const switchLabel = document.createElement('label');
@@ -46,7 +46,7 @@ function createServerInformation(containerId) {
     checkbox.type = 'checkbox';
     checkbox.id = "server-state";
 
-    checkbox.checked = selectedServer && selectedServer.state === 'on';
+    checkbox.checked = currentServer && currentServer.state === 'on';
 
     // Create the slider element (span)
     const switchText = document.createElement('span');
@@ -62,14 +62,15 @@ function createServerInformation(containerId) {
     hostedWebsites.classList.add('hosted-websites');
 
     var hostedWebsitesTitle = document.createElement('p');
-    labelText.textContent = "Hosted websites:";
-    hostedWebsitesTitle.appendChild(labelText);
+    const hostLabel = document.createElement("b");
+    hostLabel.textContent = "Hosted websites:";
+    hostedWebsitesTitle.appendChild(hostLabel);
 
     var websiteList = document.createElement('ul');
     websiteList.id = 'website-list';
 
     const server = dijkstraServers.filter((server) => {
-        return server.ip == selectedNode.data('label');
+        return server.ip == selectedServer.data('label');
     })[0];
 
     if (server !== undefined && server !== null && server.websites.length != 0) {
@@ -132,81 +133,23 @@ function createServerInformation(containerId) {
 
     var deleteBtn = document.getElementById("remove-server");
     deleteBtn.addEventListener("click", () => {
-        deleteSelectedNode();
+        deleteSelectedServer();
     });
 
     var updateServer = document.getElementById("update-server");
     updateServer.addEventListener("click", () => {
-        updateSelectedServer();
+        updateSelectedServerData();
     });
 }
 
-function updateSelectedServer() {
-    const IPAdress = document.getElementById("server-ip").value;
-    const serverState = (document.getElementById("server-state").checked) ? "on" : "off";
-    const websiteList = getListContents("website-list");
+function appendWebsite(website) {
+    var websiteList = document.getElementById("website-list");
+    var websiteCta = document.getElementById("website-cta");
 
-    updateServerIP(IPAdress);
-    updateServerState(IPAdress, serverState);
-    updateServerWebsites(IPAdress, websiteList);
-}
+    var li = document.createElement("li");
+    li.textContent = website;
 
-function getListContents(ulElementId) {
-    var ulElement = document.getElementById(ulElementId);
-    var listItems = ulElement.getElementsByTagName('li');
-    var contents = [];
-
-    for (var i = 0; i < listItems.length - 1; i++) {
-        contents.push(listItems[i].textContent);
-    }
-
-    return contents;
-}
-
-function updateServerWebsites(IPAdress, websiteList) {
-    const server = dijkstraServers.filter((server) => {
-        return server.ip == IPAdress;
-    })[0];
-
-    server.websites = websiteList;
-}
-
-function updateServerState(IPAdress, serverState) {
-    const srcServer = dijkstraServers.filter((server) => {
-        return server.ip == IPAdress;
-    })[0];
-
-    srcServer.state = serverState;
-}
-
-function updateServerIP(IPAdress) {
-    const oldIP = selectedNode.data('label');
-
-    // Update IP in cy geometry
-    selectedNode.data('label', IPAdress);
-    cy.style().update();
-
-    // Update IP in dijkstra servers
-    const srcServer = dijkstraServers.filter((server) => {
-        return server.ip == oldIP;
-    })[0];
-
-    srcServer.ip = IPAdress;
-
-    // Update IP in server links
-    replaceIP(serverLinks, oldIP, IPAdress);
-}
-
-function replaceIP(arr, oldIP, newIP) {
-    return arr.map(obj => {
-        if (obj.srcIP === oldIP) {
-            obj.srcIP = newIP;
-        }
-        if (obj.targetIP === oldIP) {
-            obj.targetIP = newIP;
-        }
-        return obj;
-    });
+    websiteList.insertBefore(li, websiteCta);
 }
 
 function createNoInformation(containerId) {
@@ -225,20 +168,6 @@ function createNoInformation(containerId) {
     container.appendChild(textContainer);
 }
 
-function validWebsite(websiteValue) {
-    return (websiteValue !== "" && websiteValue !== undefined && websiteValue !== null);
-}
-
-function appendWebsite(website) {
-    var websiteList = document.getElementById("website-list");
-    var websiteCta = document.getElementById("website-cta");
-
-    var li = document.createElement("li");
-    li.textContent = website;
-
-    websiteList.insertBefore(li, websiteCta);
-}
-
 createNoInformation("server-info");
 
 const updateLatencyBtn = document.getElementById("update-latency");
@@ -246,76 +175,7 @@ updateLatencyBtn.addEventListener("click", () => {
     updateSelectedEdge();
 });
 
-function updateSelectedEdge() {
-    const latencyValue = document.getElementById("latency").value;
-
-    if (latencyValue !== null && latencyValue !== undefined != "") {
-        selectedEdge._private.data.weight = latencyValue;
-
-        cy.style().selector('edge').style().update();
-
-        updateLinks(latencyValue);
-    }
-}
-
-function updateLinks(latency) {
-    const srcServer = dijkstraServers.filter((server) => {
-        return server.ip == selectedEdge.source().data('label');
-    })[0];
-
-    const targetServer = dijkstraServers.filter((server) => {
-        return server.ip == selectedEdge.target().data('label');
-    })[0];
-
-    srcServer.connections.forEach(server => {
-        if (server.node.ip == targetServer.ip) {
-            server.latency = latency;
-        }
-    });
-
-    targetServer.connections.forEach(server => {
-        if (server.node.ip == srcServer.ip) {
-            server.latency = latency;
-        }
-    });
-}
-
 const runBtn = document.getElementById("run-simulation");
 runBtn.addEventListener("click", () => {
     runSimulation();
 });
-
-function runSimulation() {
-    const url = document.getElementById("url").value;
-
-    if (dijkstra != null && dijkstra != undefined && url != "") {
-        console.log("Running simulation ...");
-
-        const path = findShortestPath(dijkstra, url);
-
-        for (let i = 0; i < path.length - 1; i++) {
-            highlightServer(path[i]);
-            highlightEdge(path[i], path[i + 1]);
-        }
-
-        highlightServer(path[path.length - 1]);
-    }
-}
-
-function highlightServer(server) {
-    cy.nodes(`[label='${server.ip}']`).addClass("highlight");
-    cy.style().update();
-}
-
-function highlightEdge(server, linkedServer) {
-    const edgeID = getEdgeID(server, linkedServer);
-    cy.edges(`#${edgeID}`).addClass("highlight");
-    console.log(cy.edges(`#${edgeID}`).id());
-    cy.style().update();
-}
-
-function getEdgeID(server, linkedServer) {
-    return server.connections.filter((connection) => {
-        return connection.node.ip == linkedServer.ip;
-    })[0].edgeID;
-}

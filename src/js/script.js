@@ -1,7 +1,7 @@
 // Create a new node
 cy.on('click', function (event) {
-    if (canvasClicked(event) && !nodeSelected() && !edgeSelected() && !hasHighlighted()) {
-        addNode(event.position);
+    if (canvasClicked(event) && !hasServerSelected() && !hasSelectedEdge() && !hasHighlighted()) {
+        createServer(event.position);
     } else if (canvasClicked(event)) {
         deselectAll();
         updateUI();
@@ -10,40 +10,37 @@ cy.on('click', function (event) {
 
 // Create a link bewteen nodes
 cy.on('click', 'node', function (event) {
-    if (nodeSelected() && targetNodeSelected(event.target)) {
-        var targetNode = event.target;
+    if (hasServerSelected() && hasTargetServerSelected(event)) {
+        var targetServer = event.target;
 
         console.log("==== NEW EDGE ====");
         console.log("Target node selected.");
-        console.log("Source id: " + selectedNode.id());
-        console.log("Target id: " + targetNode.id());
+        console.log("Source id: " + selectedServer.id());
+        console.log("Target id: " + targetServer.id());
 
         // Create edge geometry
-        if (!isLinked(selectedNode, targetNode)) {
-            addEdge(selectedNode, targetNode);
+        if (!isLinked(selectedServer, targetServer)) {
+            createEdge(selectedServer, targetServer);
         } else {
             console.log(">>> Existing edge data. Link not added.");
         }
-    } else if (selectedNode == event.target) {
+    } else if (selectedServer == event.target) {
         console.log(">>> Same node. Edge not created.");
     }
 
-    selectedNode = event.target;
+    selectedServer = event.target;
     console.log("\n");
 
-    dijkstra = dijkstraServers.filter((server) => {
-        return server.ip == selectedNode.data('label');
-    })[0];
-
-    displayNodeContent();
+    updateDijkstraServer();
+    updateServerInformationDisplay();
 });
 
 // Select & delete edges
 cy.on('click', 'edge', function (event) {
-    selectedNode = null;
+    selectedServer = null;
 
     if (isSelectedEdge(event.target)) {
-        removeLink(event.target.id());
+        removeEdge(event.target.id());
 
         console.log(">>> Same edge. Edge deleted.");
         console.log("\n");
@@ -62,177 +59,4 @@ function updateUI() {
 function updateLatencyDisplay() {
     const latencyField = document.getElementById("latency");
     latencyField.value = (selectedEdge == null) ? 0 : selectedEdge.data('weight');
-}
-
-// Boolean functions
-function canvasClicked(event) {
-    return event.target === cy;
-}
-
-function nodeSelected() {
-    return !(selectedNode === null);
-}
-
-function edgeSelected() {
-    return !(selectedEdge === null);
-}
-
-function targetNodeSelected(node) {
-    return selectedNode != node;
-}
-
-function isLinked(sourceNode, targetNode) {
-    var edges = cy.edges("[source='" + sourceNode.id() + "'][target='" + targetNode.id() + "']")
-        .union(cy.edges("[source='" + targetNode.id() + "'][target='" + sourceNode.id() + "']"));
-    return edges.length > 0;
-}
-
-function isSelectedEdge(edge) {
-    return selectedEdge == edge;
-}
-
-function hasHighlighted() {
-    return !hasNoClass("highlight");
-}
-
-function hasNoClass(className) {
-    return cy.elements().every(function (element) {
-        return !element.hasClass(className);
-    });
-}
-
-function deselectAll() {
-    selectedNode = null;
-    selectedEdge = null;
-    cy.elements().removeClass('highlight');
-}
-
-// Node
-function addNode(clickPos) {
-    var newNode = {
-        data: { id: generateNodeID(), label: generateRandomIP() },
-        position: { x: clickPos.x, y: clickPos.y },
-        hostedWebsites: []
-    };
-
-    cy.add(newNode);
-    dijkstraServers.push({
-        ip: newNode.data.label,
-        state: 'on',
-        websites: [],
-        connections: []
-    });
-}
-
-function generateNodeID() {
-    nodeCounter++;
-    return 'node-' + nodeCounter;
-}
-
-function displayNodeContent() {
-    createServerInformation("server-info");
-    document.getElementById("server-ip").value = selectedNode.data('label');
-}
-
-function deleteSelectedNode() {
-    cy.remove(`node[id = '${selectedNode.id()}']`);
-
-    dijkstraServers = dijkstraServers.filter((server) => {
-        return server.ip != selectedNode.data('label');
-    });
-
-    selectedNode = null;
-    createNoInformation("server-info");
-}
-
-function generateRandomIP() {
-    // Define valid IP address component range (1-255)
-    const max = 255;
-    const min = 1;
-
-    // Generate random octets (parts) of the IP address
-    var octet1 = Math.floor(Math.random() * (max - min + 1)) + min;
-    var octet2 = Math.floor(Math.random() * (max - min + 1)) + min;
-    var octet3 = Math.floor(Math.random() * (max - min + 1)) + min;
-    var octet4 = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    // Return the formatted IP address
-    return octet1 + "." + octet2 + "." + octet3 + "." + octet4;
-}
-
-// Edge
-function addEdge(srcNode, targetNode) {
-    const edge = {
-        data: {
-            id: generateEdgeID(),
-            source: srcNode.id(),
-            target: targetNode.id(),
-            weight: 10
-        }
-    }
-
-    cy.add(edge);
-
-    serverLinks.push({
-        id: edge.data.id,
-        srcIP: srcNode.data('label'),
-        targetIP: targetNode.data('label')
-    });
-
-    linkServer(srcNode.data('label'), targetNode.data('label'), edge.data.weight, edge.data.id);
-}
-
-function linkServer(srcIP, targetIP, latency, edgeID) {
-    const srcServer = getServer(srcIP);
-    const targetServer = getServer(targetIP);
-
-    srcServer.connections.push({
-        node: targetServer,
-        latency: latency,
-        edgeID: edgeID
-    });
-
-    targetServer.connections.push({
-        node: srcServer,
-        latency: latency,
-        edgeID: edgeID
-    });
-}
-
-function removeLink(edgeID) {
-    cy.remove(cy.edges(`[id = '${edgeID}']`));
-
-    const link = serverLinks.filter((link) => {
-        return link.id == edgeID;
-    })[0];
-
-    serverLinks = serverLinks.filter((link) => {
-        return link.id != edgeID;
-    });
-
-    unlinkServer(link.srcIP, link.targetIP);
-}
-
-function unlinkServer(srcIP, targetIP) {
-    const srcServer = getServer(srcIP);
-    const targetServer = getServer(targetIP);
-
-    srcServer.connections = srcServer.connections.filter((connection) => {
-        return connection.node.ip != targetIP;
-    });
-
-    targetServer.connections = targetServer.connections.filter((connection) => {
-        return connection.node.ip != srcIP;
-    });
-}
-
-function getServer(IP) {
-    return dijkstraServers.filter((server) => {
-        return server.ip == IP;
-    })[0];
-}
-
-function generateEdgeID() {
-    edgeCounter++;
-    return 'edge-' + edgeCounter;
 }
