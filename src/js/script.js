@@ -23,6 +23,12 @@ var cy = cytoscape({
             }
         },
         {
+            selector: 'edge:highlight',
+            style: {
+                backgroundColor: 'rgb(160, 200, 160)'
+            }
+        },
+        {
             selector: 'node',
             style: {
                 padding: 10,
@@ -42,6 +48,12 @@ var cy = cytoscape({
             selector: 'node:unselected',
             style: {
                 backgroundColor: 'rgb(160, 160, 180)'
+            }
+        },
+        {
+            selector: 'node:highlight',
+            style: {
+                backgroundColor: 'rgb(160, 200, 160)'
             }
         }
     ],
