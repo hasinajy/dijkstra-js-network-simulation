@@ -48,7 +48,7 @@ var cy = cytoscape({
     elements: []
 });
 
-var nodes = [], links = [];
+var dijkstraServers = [], links = [];
 var nodeCounter = 0, edgeCounter = 0;
 var selectedNode = null, selectedEdge = null;
 
@@ -139,7 +139,7 @@ function addNode(clickPos) {
     };
 
     cy.add(newNode);
-    nodes.push({
+    dijkstraServers.push({
         ip: newNode.data.label,
         websites: [],
         connections: []
