@@ -65,9 +65,7 @@ cy.on('click', function (event) {
     if (canvasClicked(event) && !nodeSelected() && !edgeSelected() && !hasHighlighted()) {
         addNode(event.position);
     } else if (canvasClicked(event)) {
-        selectedNode = null;
-        selectedEdge = null;
-        cy.elements().removeClass('highlight');
+        deselectAll();
         createNoInformation("server-info");
         displayEdgeData();
     }
@@ -159,6 +157,12 @@ function hasNoClass(className) {
     return cy.elements().every(function (element) {
         return !element.hasClass(className);
     });
+}
+
+function deselectAll() {
+    selectedNode = null;
+    selectedEdge = null;
+    cy.elements().removeClass('highlight');
 }
 
 // Node
