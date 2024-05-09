@@ -98,6 +98,39 @@ function createServerInformation(containerId) {
 }
 
 function updateSelectedServer() {
+    const IPAdress = document.getElementById("server-ip").value;
+
+    updateServerIP(IPAdress);
+}
+
+function updateServerIP(IPAdress) {
+    const oldIP = selectedNode.data('label');
+
+    // Update IP in cy geometry
+    selectedNode.data('label', IPAdress);
+    cy.style().update();
+
+    // Update IP in dijkstra servers
+    const srcServer = dijkstraServers.filter((server) => {
+        return server.ip == oldIP;
+    })[0];
+
+    srcServer.ip = IPAdress;
+
+    // Update IP in server links
+    replaceIP(serverLinks, oldIP, IPAdress);
+}
+
+function replaceIP(arr, oldIP, newIP) {
+    return arr.map(obj => {
+        if (obj.srcIP === oldIP) {
+            obj.srcIP = newIP;
+        }
+        if (obj.targetIP === oldIP) {
+            obj.targetIP = newIP;
+        }
+        return obj;
+    });
 }
 
 function createNoInformation(containerId) {
