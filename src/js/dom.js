@@ -145,5 +145,28 @@ function updateSelectedEdge() {
 
         cy.style().selector('edge').style().update();
         
+        updateLinks(latencyValue);
     }
+}
+
+function updateLinks(latency) {
+    const srcServer = dijkstraServers.filter((server) => {
+        return server.ip == selectedEdge.source().data('label');
+    })[0];
+    
+    const targetServer = dijkstraServers.filter((server) => {
+        return server.ip == selectedEdge.target().data('label');
+    })[0];
+
+    srcServer.connections.forEach(server => {
+        if (server.node.ip == targetServer.ip) {
+            server.latency = latency;
+        }
+    });
+
+    targetServer.connections.forEach(server => {
+        if (server.node.ip == srcServer.ip) {
+            server.latency = latency;
+        }
+    });
 }
