@@ -119,7 +119,7 @@ cy.on('click', 'edge', function (event) {
 
 function displayEdgeData() {
     const latencyField = document.getElementById("latency");
-    latencyField.value = (selectedEdge == null) ? 0 : selectedEdge._private.data.weight;
+    latencyField.value = (selectedEdge == null) ? 0 : selectedEdge.data('weight');
 }
 
 // Boolean functions
@@ -189,7 +189,7 @@ function generateNodeID() {
 
 function displayNodeContent() {
     createServerInformation("server-info");
-    document.getElementById("server-ip").value = selectedNode._private.data.label;
+    document.getElementById("server-ip").value = selectedNode.data('label');
 }
 
 function deleteSelectedNode() {
