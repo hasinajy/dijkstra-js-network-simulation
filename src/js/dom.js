@@ -59,6 +59,7 @@ function createServerInformation(containerId) {
 
     var updateServerSpan = document.createElement('span');
     updateServerSpan.classList.add('server-btn', 'btn');
+    updateServerSpan.id = "update-server";
     updateServerSpan.textContent = 'Update server data';
 
     // Nest elements
@@ -77,7 +78,6 @@ function createServerInformation(containerId) {
     container.appendChild(infoButtonGroup);
 
     var addWebsite = document.getElementById("add-website");
-
     addWebsite.addEventListener("click", (event) => {
         var websiteValue = document.getElementById("website-field").value;
 
@@ -87,10 +87,17 @@ function createServerInformation(containerId) {
     });
 
     var deleteBtn = document.getElementById("remove-server");
-
     deleteBtn.addEventListener("click", () => {
         deleteSelectedNode();
     });
+
+    var updateServer = document.getElementById("update-server");
+    updateServer.addEventListener("click", () => {
+        updateSelectedServer();
+    });
+}
+
+function updateSelectedServer() {
 }
 
 function createNoInformation(containerId) {
