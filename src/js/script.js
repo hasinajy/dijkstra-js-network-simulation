@@ -94,7 +94,7 @@ cy.on('click', 'edge', function (event) {
     selectedNode = null;
 
     if (isSelectedEdge(event.target)) {
-        cy.remove(cy.edges(`[id = '${event.target.id()}']`));
+        removeLink(event.target.id());
 
         console.log(">>> Same edge. Edge deleted.");
         console.log("\n");
@@ -200,7 +200,7 @@ function addEdge(srcNode, targetNode) {
         srcIP: srcNode._private.data.label,
         targetIP: targetNode._private.data.label 
     });
-    
+
     linkServer(srcNode._private.data.label, targetNode._private.data.label, edge.data.weight);
 }
 
@@ -216,6 +216,33 @@ function linkServer(srcIP, targetIP, latency) {
     targetServer.connections.push({
         node: srcServer,
         latency: latency
+    });
+}
+
+function removeLink(edgeID) {
+    cy.remove(cy.edges(`[id = '${edgeID}']`));
+    
+    const link = serverLinks.filter((link) => {
+        return link.id == edgeID;
+    })[0];
+
+    serverLinks = serverLinks.filter((link) => {
+        return link.id != edgeID;
+    });
+
+    unlinkServer(link.srcIP, link.targetIP);
+}
+
+function unlinkServer(srcIP, targetIP) {
+    const srcServer = getServer(srcIP);
+    const targetServer = getServer(targetIP);
+
+    srcServer.connections = srcServer.connections.filter((connection) => {
+        return connection.node.ip != targetIP;
+    });
+    
+    targetServer.connections = targetServer.connections.filter((connection) => {
+        return connection.node.ip != srcIP;
     });
 }
 
