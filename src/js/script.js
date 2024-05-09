@@ -169,22 +169,33 @@ function deleteSelectedNode() {
 
 // Edge
 function addEdge(srcNode, targetNode) {
-    cy.add({
+    const edge = {
         data: {
             id: generateEdgeID(),
             source: srcNode.id(),
             target: targetNode.id(),
             weight: 10
         }
+    }
+
+    cy.add(edge);
+
+    linkServer(srcNode._private.data.label, targetNode._private.data.label, edge.data.weight);
+}
+
+function linkServer(srcIP, targetIP, latency) {
+    const srcServer = getServer(srcIP);
+    const targetServer = getServer(targetIP);
+
+    srcServer.connections.push({
+        node: targetServer,
+        latency: latency
     });
 
-    links.push(
-        {
-            srcNode: srcNode,
-            targetNode: targetNode,
-            ping: 10
-        }
-    );
+    targetServer.connections.push({
+        node: targetServer,
+        latency: latency
+    });
 }
 
 function generateEdgeID() {
