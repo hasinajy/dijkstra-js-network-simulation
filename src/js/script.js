@@ -60,6 +60,7 @@ cy.on('click', function (event) {
         selectedNode = null;
         selectedEdge = null;
         createNoInformation("server-info");
+        displayEdgeData();
     }
 });
 
@@ -101,7 +102,14 @@ cy.on('click', 'edge', function (event) {
     }
 
     selectedEdge = (isSelectedEdge(event.target)) ? null : event.target;
+
+    displayEdgeData();
 });
+
+function displayEdgeData() {
+    const latencyField = document.getElementById("latency");
+    latencyField.value = (selectedEdge == null) ? 0 : selectedEdge._private.data.weight;
+}
 
 // Boolean functions
 function canvasClicked(event) {
@@ -171,16 +179,16 @@ function generateRandomIP() {
     // Define valid IP address component range (1-255)
     const max = 255;
     const min = 1;
-  
+
     // Generate random octets (parts) of the IP address
     var octet1 = Math.floor(Math.random() * (max - min + 1)) + min;
     var octet2 = Math.floor(Math.random() * (max - min + 1)) + min;
     var octet3 = Math.floor(Math.random() * (max - min + 1)) + min;
     var octet4 = Math.floor(Math.random() * (max - min + 1)) + min;
-  
+
     // Return the formatted IP address
     return octet1 + "." + octet2 + "." + octet3 + "." + octet4;
-  }
+}
 
 // Edge
 function addEdge(srcNode, targetNode) {
@@ -198,7 +206,7 @@ function addEdge(srcNode, targetNode) {
     serverLinks.push({
         id: edge.data.id,
         srcIP: srcNode._private.data.label,
-        targetIP: targetNode._private.data.label 
+        targetIP: targetNode._private.data.label
     });
 
     linkServer(srcNode._private.data.label, targetNode._private.data.label, edge.data.weight);
@@ -221,7 +229,7 @@ function linkServer(srcIP, targetIP, latency) {
 
 function removeLink(edgeID) {
     cy.remove(cy.edges(`[id = '${edgeID}']`));
-    
+
     const link = serverLinks.filter((link) => {
         return link.id == edgeID;
     })[0];
@@ -240,7 +248,7 @@ function unlinkServer(srcIP, targetIP) {
     srcServer.connections = srcServer.connections.filter((connection) => {
         return connection.node.ip != targetIP;
     });
-    
+
     targetServer.connections = targetServer.connections.filter((connection) => {
         return connection.node.ip != srcIP;
     });
