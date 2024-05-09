@@ -193,7 +193,7 @@ function linkServer(srcIP, targetIP, latency) {
     });
 
     targetServer.connections.push({
-        node: targetServer,
+        node: srcServer,
         latency: latency
     });
 }
