@@ -31,8 +31,9 @@ function createServerInformation(containerId) {
     var hostedWebsites = document.createElement('div');
     hostedWebsites.classList.add('hosted-websites');
 
-    var hostedWebsitesTitle = document.createElement('p');
-    hostedWebsitesTitle.textContent = 'Hosted websites';
+    var hostedWebsitesTitle = document.createElement('p'); 
+    labelText.textContent = "Hosted websites:"
+    hostedWebsitesTitle.appendChild(labelText);
 
     var websiteList = document.createElement('ul');
     websiteList.id = 'website-list';
@@ -211,7 +212,7 @@ function updateSelectedEdge() {
         selectedEdge._private.data.weight = latencyValue;
 
         cy.style().selector('edge').style().update();
-        
+
         updateLinks(latencyValue);
     }
 }
@@ -220,7 +221,7 @@ function updateLinks(latency) {
     const srcServer = dijkstraServers.filter((server) => {
         return server.ip == selectedEdge.source().data('label');
     })[0];
-    
+
     const targetServer = dijkstraServers.filter((server) => {
         return server.ip == selectedEdge.target().data('label');
     })[0];
