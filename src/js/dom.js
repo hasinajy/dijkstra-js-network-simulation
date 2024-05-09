@@ -28,11 +28,18 @@ function createServerInformation(containerId) {
     input.value = '192.168.17.16';
     input.id = 'server-ip';
 
+    var serverState = document.createElement('div');
+    var serverStateLabel = document.createElement('p');
+    var bold = document.createElement('b');
+    bold.textContent = "Server state:";
+    serverStateLabel.appendChild(bold);
+    serverState.appendChild(serverStateLabel);
+
     var hostedWebsites = document.createElement('div');
     hostedWebsites.classList.add('hosted-websites');
 
     var hostedWebsitesTitle = document.createElement('p'); 
-    labelText.textContent = "Hosted websites:"
+    labelText.textContent = "Hosted websites:";
     hostedWebsitesTitle.appendChild(labelText);
 
     var websiteList = document.createElement('ul');
@@ -87,6 +94,7 @@ function createServerInformation(containerId) {
     formControl.appendChild(input);
     container.appendChild(h1);
     container.appendChild(formControl);
+    container.appendChild(serverState);
     container.appendChild(hostedWebsites);
     container.appendChild(infoButtonGroup);
 
