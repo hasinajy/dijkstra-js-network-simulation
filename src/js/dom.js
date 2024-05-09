@@ -237,3 +237,16 @@ function updateLinks(latency) {
         }
     });
 }
+
+const runBtn = document.getElementById("run-simulation");
+runBtn.addEventListener("click", () => {
+    runSimulation();
+});
+
+function runSimulation() {
+    const url = document.getElementById("url").value;
+
+    if (dijkstra != null && dijkstra != undefined && url == "") {
+        console.log("Running simulation ...");
+    }
+}
