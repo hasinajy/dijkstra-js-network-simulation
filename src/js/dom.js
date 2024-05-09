@@ -246,7 +246,7 @@ runBtn.addEventListener("click", () => {
 function runSimulation() {
     const url = document.getElementById("url").value;
 
-    if (dijkstra != null && dijkstra != undefined && url == "") {
+    if (dijkstra != null && dijkstra != undefined && url != "") {
         console.log("Running simulation ...");
     }
 }
