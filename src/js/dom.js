@@ -131,3 +131,19 @@ function appendWebsite(website) {
 }
 
 createNoInformation("server-info");
+
+const updateLatencyBtn = document.getElementById("update-latency");
+updateLatencyBtn.addEventListener("click", () => {
+    updateSelectedEdge();
+});
+
+function updateSelectedEdge() {
+    const latencyValue = document.getElementById("latency").value;
+
+    if (latencyValue !== null && latencyValue !== undefined != "") {
+        selectedEdge._private.data.weight = latencyValue;
+
+        cy.style().selector('edge').style().update();
+        
+    }
+}
