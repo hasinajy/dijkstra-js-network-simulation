@@ -250,5 +250,27 @@ function runSimulation() {
         console.log("Running simulation ...");
 
         const path = findShortestPath(dijkstra, url);
+
+        for (let i = 0; i < path.length - 1; i++) {
+            highlightServer(path[i]);
+            highlightEdge(path[i], path[i + 1]);
+        }
+
+        highlightServer(path[path.length - 1]);
     }
+}
+
+function highlightServer(server) {
+    cy.nodes(`[label='${server.ip}']`).addClass("highlight");
+}
+
+function highlightEdge(server, linkedServer) {
+    const edgeID = getEdgeID(server, linkedServer);
+    cy.edges(`#${edgeID}`).addClass("highlight");
+}
+
+function getEdgeID(server, linkedServer) {
+    return server.connections.filter((connection) => {
+        return connection.node.ip == linkedServer.ip;
+    })[0].edgeID;
 }
