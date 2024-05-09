@@ -168,6 +168,7 @@ function addNode(clickPos) {
     cy.add(newNode);
     dijkstraServers.push({
         ip: newNode.data.label,
+        state: 'on',
         websites: [],
         connections: []
     });
