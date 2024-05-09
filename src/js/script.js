@@ -66,8 +66,7 @@ cy.on('click', function (event) {
         addNode(event.position);
     } else if (canvasClicked(event)) {
         deselectAll();
-        createNoInformation("server-info");
-        updateLatencyDisplay();
+        updateUI();
     }
 });
 
@@ -116,6 +115,11 @@ cy.on('click', 'edge', function (event) {
 
     updateLatencyDisplay();
 });
+
+function updateUI() {
+    createNoInformation("server-info");
+    updateLatencyDisplay();
+}
 
 function updateLatencyDisplay() {
     const latencyField = document.getElementById("latency");
