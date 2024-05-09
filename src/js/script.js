@@ -205,25 +205,27 @@ function addEdge(srcNode, targetNode) {
 
     serverLinks.push({
         id: edge.data.id,
-        srcIP: srcNode._private.data.label,
-        targetIP: targetNode._private.data.label
+        srcIP: srcNode.data('label'),
+        targetIP: targetNode.data('label')
     });
 
-    linkServer(srcNode._private.data.label, targetNode._private.data.label, edge.data.weight);
+    linkServer(srcNode.data('label'), targetNode.data('label'), edge.data.weight, edge.data.id);
 }
 
-function linkServer(srcIP, targetIP, latency) {
+function linkServer(srcIP, targetIP, latency, edgeID) {
     const srcServer = getServer(srcIP);
     const targetServer = getServer(targetIP);
 
     srcServer.connections.push({
         node: targetServer,
-        latency: latency
+        latency: latency,
+        edgeID: edgeID
     });
 
     targetServer.connections.push({
         node: srcServer,
-        latency: latency
+        latency: latency,
+        edgeID: edgeID
     });
 }
 
