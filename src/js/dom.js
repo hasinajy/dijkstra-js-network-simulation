@@ -262,11 +262,13 @@ function runSimulation() {
 
 function highlightServer(server) {
     cy.nodes(`[label='${server.ip}']`).addClass("highlight");
+    cy.style().update();
 }
 
 function highlightEdge(server, linkedServer) {
     const edgeID = getEdgeID(server, linkedServer);
     cy.edges(`#${edgeID}`).addClass("highlight");
+    cy.style().update();
 }
 
 function getEdgeID(server, linkedServer) {
