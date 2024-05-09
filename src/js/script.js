@@ -133,7 +133,7 @@ function isSelectedEdge(edge) {
 // Node
 function addNode(clickPos) {
     var newNode = {
-        data: { id: generateNodeID(), label: '0.0.0.0' },
+        data: { id: generateNodeID(), label: generateRandomIP() },
         position: { x: clickPos.x, y: clickPos.y },
         hostedWebsites: []
     };
@@ -166,6 +166,21 @@ function deleteSelectedNode() {
     selectedNode = null;
     createNoInformation("server-info");
 }
+
+function generateRandomIP() {
+    // Define valid IP address component range (1-255)
+    const max = 255;
+    const min = 1;
+  
+    // Generate random octets (parts) of the IP address
+    var octet1 = Math.floor(Math.random() * (max - min + 1)) + min;
+    var octet2 = Math.floor(Math.random() * (max - min + 1)) + min;
+    var octet3 = Math.floor(Math.random() * (max - min + 1)) + min;
+    var octet4 = Math.floor(Math.random() * (max - min + 1)) + min;
+  
+    // Return the formatted IP address
+    return octet1 + "." + octet2 + "." + octet3 + "." + octet4;
+  }
 
 // Edge
 function addEdge(srcNode, targetNode) {
