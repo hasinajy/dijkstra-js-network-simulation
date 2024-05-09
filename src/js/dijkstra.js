@@ -1,11 +1,3 @@
-class Node {
-    constructor(ip, websites) {
-        this.ip = ip;
-        this.websites = websites; // array of websites
-        this.connections = []; // array of connections {node: Node, latency: number}
-    }
-}
-
 // Dijkstra's algorithm
 function findShortestPath(startNode, website) {
     let distances = {};
@@ -13,7 +5,7 @@ function findShortestPath(startNode, website) {
     let unvisitedNodes = new Set();
 
     // Initialization
-    for (let node of allNodes) {
+    for (let node of dijkstraServers) {
         distances[node.ip] = Infinity;
         previousNodes[node.ip] = null;
         unvisitedNodes.add(node);
