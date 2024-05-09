@@ -62,11 +62,12 @@ var cy = cytoscape({
 
 // Create a new node
 cy.on('click', function (event) {
-    if (canvasClicked(event) && !nodeSelected() && !edgeSelected()) {
+    if (canvasClicked(event) && !nodeSelected() && !edgeSelected() && hasNoClass("highlight")) {
         addNode(event.position);
     } else if (canvasClicked(event)) {
         selectedNode = null;
         selectedEdge = null;
+        cy.elements().removeClass('highlight');
         createNoInformation("server-info");
         displayEdgeData();
     }
@@ -149,6 +150,12 @@ function isLinked(sourceNode, targetNode) {
 function isSelectedEdge(edge) {
     return selectedEdge == edge;
 }
+
+function hasNoClass(className) {
+    return cy.elements().every(function(element) {
+      return !element.hasClass(className);
+    });
+  }
 
 // Node
 function addNode(clickPos) {
