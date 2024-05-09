@@ -35,6 +35,8 @@ function createServerInformation(containerId) {
     serverStateLabel.appendChild(bold);
     serverState.appendChild(serverStateLabel);
 
+    const selectedServer = getServer(selectedNode.data('label'));
+
     // Create the label element
     const switchLabel = document.createElement('label');
     switchLabel.classList.add('switch');
@@ -43,6 +45,8 @@ function createServerInformation(containerId) {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = "server-state";
+
+    checkbox.checked = selectedServer && selectedServer.state === 'on';
 
     // Create the slider element (span)
     const switchText = document.createElement('span');
