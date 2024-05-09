@@ -99,8 +99,30 @@ function createServerInformation(containerId) {
 
 function updateSelectedServer() {
     const IPAdress = document.getElementById("server-ip").value;
+    const websiteList = getListContents("website-list");
 
     updateServerIP(IPAdress);
+    updateServerWebsites(IPAdress, websiteList);
+}
+
+function getListContents(ulElementId) {
+    var ulElement = document.getElementById(ulElementId);
+    var listItems = ulElement.getElementsByTagName('li');
+    var contents = [];
+
+    for (var i = 0; i < listItems.length - 1; i++) {
+        contents.push(listItems[i].textContent);
+    }
+
+    return contents;
+}
+
+function updateServerWebsites(IPAdress, websiteList) {
+    const server = dijkstraServers.filter((server) => {
+        return server.ip == IPAdress;
+    })[0];
+
+    server.websites = websiteList;
 }
 
 function updateServerIP(IPAdress) {
