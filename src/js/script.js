@@ -67,7 +67,7 @@ cy.on('click', function (event) {
     } else if (canvasClicked(event)) {
         deselectAll();
         createNoInformation("server-info");
-        displayEdgeData();
+        updateLatencyDisplay();
     }
 });
 
@@ -114,10 +114,10 @@ cy.on('click', 'edge', function (event) {
 
     selectedEdge = (isSelectedEdge(event.target)) ? null : event.target;
 
-    displayEdgeData();
+    updateLatencyDisplay();
 });
 
-function displayEdgeData() {
+function updateLatencyDisplay() {
     const latencyField = document.getElementById("latency");
     latencyField.value = (selectedEdge == null) ? 0 : selectedEdge.data('weight');
 }
