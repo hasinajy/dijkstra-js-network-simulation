@@ -18,25 +18,12 @@
         <section class="server-link">
             <h1 class="section-title">Server Links</h1>
 
-            <div class="node-choice">
-                <select name="server-start" class="server-list" id="server-start">
-                    <option value="">192.168.164.174</option>
-                    <option value="">192.168.16.17</option>
-                    <option value="">192.168.16.17</option>
-                    <option value="">192.168.16.17</option>
-                </select>
-
-                <span class="fa fa-exchange-alt"></span>
-
-                <select name="server-end" class="server-list" id="server-end">
-                    <option value="">192.168.164.174</option>
-                    <option value="">192.168.16.17</option>
-                    <option value="">192.168.16.17</option>
-                    <option value="">192.168.16.17</option>
-                </select>
+            <div class="form__control server-ip">
+                <label for="latency"><b>Latency:</b></label>
+                <input type="number" name="latency" id="latency">
             </div>
 
-            <span class="link-btn btn">Create link</span>
+            <span class="link-btn btn">Update latency</span>
         </section>
     </div>
 
