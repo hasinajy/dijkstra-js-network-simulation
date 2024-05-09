@@ -268,6 +268,7 @@ function highlightServer(server) {
 function highlightEdge(server, linkedServer) {
     const edgeID = getEdgeID(server, linkedServer);
     cy.edges(`#${edgeID}`).addClass("highlight");
+    console.log(cy.edges(`#${edgeID}`).id());
     cy.style().update();
 }
 

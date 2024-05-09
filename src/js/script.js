@@ -25,7 +25,7 @@ var cy = cytoscape({
         {
             selector: 'edge.highlight',
             style: {
-                backgroundColor: 'rgb(160, 200, 160)'
+                lineColor: 'rgb(160, 200, 160)'
             }
         },
         {
