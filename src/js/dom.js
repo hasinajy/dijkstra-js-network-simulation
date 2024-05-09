@@ -37,6 +37,18 @@ function createServerInformation(containerId) {
     var websiteList = document.createElement('ul');
     websiteList.id = 'website-list';
 
+    const server = dijkstraServers.filter((server) => {
+        return server.ip == selectedNode.data('label');
+    })[0];
+
+    if (server !== undefined && server !== null && server.websites.length != 0) {
+        server.websites.forEach((site) => {
+            var website = document.createElement('li');
+            website.textContent = site;
+            websiteList.appendChild(website);
+        });
+    }
+
     var websiteListItem = document.createElement('li');
     websiteListItem.id = 'website-cta';
 
