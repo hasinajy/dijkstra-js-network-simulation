@@ -109,16 +109,12 @@ function updateDijkstraServer() {
 }
 
 function highlightServer(server) {
-    const node = cy.nodes(`[label='${server.ip}']`);
-    node.addClass("highlight");
-
+    cy.nodes(`[label='${server.ip}']`).addClass("highlight");
     cy.style().update();
 }
 
 function bfsHighlightServer(server) {
-    const node = cy.nodes(`[label='${server.ip}']`);
-    node.addClass("bfs");
-
+    cy.nodes(`[label='${server.ip}']`).addClass("bfs");
     cy.style().update();
 }
 
@@ -317,21 +313,13 @@ function updateLinks(latency) {
 
 function highlightEdge(server, linkedServer) {
     const edgeID = getEdgeID(server, linkedServer);
-
-    const edge = cy.edges(`#${edgeID}`);
-    edge.addClass("highlight");
-
-    console.log(cy.edges(`#${edgeID}`).id());
+    cy.edges(`#${edgeID}`).addClass("highlight");
     cy.style().update();
 }
 
 function bfsHighlightEdge(server, linkedServer) {
     const edgeID = getEdgeID(server, linkedServer);
-
-    const edge = cy.edges(`#${edgeID}`);
-    edge.addClass("bfs");
-
-    console.log(cy.edges(`#${edgeID}`).id());
+    cy.edges(`#${edgeID}`).addClass("bfs");
     cy.style().update();
 }
 
