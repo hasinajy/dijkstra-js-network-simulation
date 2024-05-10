@@ -57,9 +57,3 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE.md) 
 **Feel free to contribute!**
 
 This project is open-source and welcomes contributions. If you have suggestions or improvements, please consider creating a pull request.
-
-
-<br><br><br><br>
-
-
-**Keywords:** network simulator, shortest path, latency, Dijkstra's algorithm, BFS algorithm, Cytoscape.js, JavaScript, web performance
