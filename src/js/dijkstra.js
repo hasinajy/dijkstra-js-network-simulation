@@ -11,18 +11,18 @@ function runSimulation() {
       highlightServer(path[i]);
       highlightEdge(path[i], path[i + 1]);
     }
-    
+
     highlightServer(path[path.length - 1]);
-    
-    // const bfsPath = findShortestPathBFS(dijkstra, url);
-    // console.log(bfsPath);
 
-    // for (let i = 0; i < bfsPath.length - 1; i++) {
-    //   bfsHighlightServer(bfsPath[i]);
-    //   bfsHighlightEdge(bfsPath[i], bfsPath[i + 1]);
-    // }
+    const bfsPath = findShortestPathBFS(dijkstra, url);
+    console.log(bfsPath);
 
-    // bfsHighlightServer(bfsPath[bfsPath.length - 1]);
+    for (let i = 0; i < bfsPath.length - 1; i++) {
+      bfsHighlightServer(bfsPath[i]);
+      bfsHighlightEdge(bfsPath[i], bfsPath[i + 1]);
+    }
+
+    bfsHighlightServer(bfsPath[bfsPath.length - 1]);
   }
 }
 

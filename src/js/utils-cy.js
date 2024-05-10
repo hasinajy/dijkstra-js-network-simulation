@@ -278,7 +278,7 @@ function generateEdgeID() {
 }
 
 function updateSelectedEdge() {
-    const latencyValue = document.getElementById("latency").value;
+    const latencyValue = parseInt(document.getElementById("latency").value);
 
     if (latencyValue !== null && latencyValue !== undefined != "") {
         selectedEdge.data("weight", latencyValue);
