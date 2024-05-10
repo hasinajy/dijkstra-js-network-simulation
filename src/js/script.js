@@ -1,6 +1,6 @@
 // Create a new node
 cy.on('click', function (event) {
-    if (canvasClicked(event) && !hasServerSelected() && !hasSelectedEdge() && !hasHighlighted()) {
+    if (canvasClicked(event) && !hasServerSelected() && !hasSelectedEdge() && !hasHighlighted() && !hasBfs()) {
         createServer(event.position);
     } else if (canvasClicked(event)) {
         deselectAll();

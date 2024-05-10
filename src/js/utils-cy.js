@@ -19,11 +19,16 @@ function hasNoClass(className) {
     });
 }
 
+function hasBfs() {
+    return !hasNoClass("bfs");
+}
+
 /* --------------------------------- Others --------------------------------- */
 function deselectAll() {
     selectedServer = null;
     selectedEdge = null;
     cy.elements().removeClass('highlight');
+    cy.elements().removeClass('bfs');
 }
 
 
@@ -104,7 +109,16 @@ function updateDijkstraServer() {
 }
 
 function highlightServer(server) {
-    cy.nodes(`[label='${server.ip}']`).addClass("highlight");
+    const node = cy.nodes(`[label='${server.ip}']`);
+    node.addClass("highlight");
+
+    cy.style().update();
+}
+
+function bfsHighlightServer(server) {
+    const node = cy.nodes(`[label='${server.ip}']`);
+    node.addClass("bfs");
+
     cy.style().update();
 }
 
@@ -303,7 +317,20 @@ function updateLinks(latency) {
 
 function highlightEdge(server, linkedServer) {
     const edgeID = getEdgeID(server, linkedServer);
-    cy.edges(`#${edgeID}`).addClass("highlight");
+
+    const edge = cy.edges(`#${edgeID}`);
+    edge.addClass("highlight");
+
+    console.log(cy.edges(`#${edgeID}`).id());
+    cy.style().update();
+}
+
+function bfsHighlightEdge(server, linkedServer) {
+    const edgeID = getEdgeID(server, linkedServer);
+
+    const edge = cy.edges(`#${edgeID}`);
+    edge.addClass("bfs");
+
     console.log(cy.edges(`#${edgeID}`).id());
     cy.style().update();
 }

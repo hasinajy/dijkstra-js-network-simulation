@@ -5,13 +5,24 @@ function runSimulation() {
     console.log("Running simulation ...");
 
     const path = findShortestPath(dijkstra, url);
+    console.log(path);
 
     for (let i = 0; i < path.length - 1; i++) {
       highlightServer(path[i]);
       highlightEdge(path[i], path[i + 1]);
     }
-
+    
     highlightServer(path[path.length - 1]);
+    
+    // const bfsPath = findShortestPathBFS(dijkstra, url);
+    // console.log(bfsPath);
+
+    // for (let i = 0; i < bfsPath.length - 1; i++) {
+    //   bfsHighlightServer(bfsPath[i]);
+    //   bfsHighlightEdge(bfsPath[i], bfsPath[i + 1]);
+    // }
+
+    // bfsHighlightServer(bfsPath[bfsPath.length - 1]);
   }
 }
 
@@ -58,6 +69,46 @@ function findShortestPath(startNode, website) {
         let altDistance = distances[currentNode.ip] + connection.latency;
         if (altDistance < distances[connection.node.ip]) {
           distances[connection.node.ip] = altDistance;
+          previousNodes[connection.node.ip] = currentNode;
+        }
+      }
+    }
+  }
+
+  // If no path is found
+  return null;
+}
+
+// BFS algorithm  with state check
+function findShortestPathBFS(startNode, website) {
+  let visitedNodes = new Set();
+  let queue = [];
+  let previousNodes = {};
+
+  // Initialization
+  queue.push(startNode);
+  previousNodes[startNode.ip] = null;
+
+  while (queue.length > 0) {
+    let currentNode = queue.shift();
+
+    // If the current node hosts the website, we have found our path
+    if (currentNode.websites.includes(website)) {
+      let path = [];
+      while (currentNode !== null) {
+        path.unshift(currentNode);
+        currentNode = previousNodes[currentNode.ip];
+      }
+      return path;
+    }
+
+    visitedNodes.add(currentNode);
+
+    // Add neighboring nodes (state: on) to the queue
+    for (let connection of currentNode.connections) {
+      if (connection.node.state === 'on' && !visitedNodes.has(connection.node)) { // Check neighbor state
+        queue.push(connection.node);
+        if (!previousNodes[connection.node.ip]) {
           previousNodes[connection.node.ip] = currentNode;
         }
       }
